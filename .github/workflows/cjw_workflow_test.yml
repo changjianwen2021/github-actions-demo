@@ -18,7 +18,7 @@ jobs:
         echo `uname -a`
 
     - name: Check test nodes ping
-      run: |
-        ping www.baidu.com
-        ping acorn.cpt.corigine.com
-        ping apple.cpt.corigine.com
+      run: |              
+        echo `ping -c 3 www.baidu.com`
+        echo `ping -c 3 acorn.cpt.corigine.com`
+        echo `ping -c 3 apple.cpt.corigine.com`

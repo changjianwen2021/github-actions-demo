@@ -13,4 +13,6 @@ jobs:
         MIDDLE_NAME: J
         LAST_NAME: W
       run: |
-        echo $MY_VAR $FIRST_NAME $MIDDLE_NAME $LAST_NAME.
+        echo $MY_VAR $FIRST_NAME $MIDDLE_NAME $LAST_NAME.       
+        echo $PATH
+        echo `uname -a`

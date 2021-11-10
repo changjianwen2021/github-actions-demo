@@ -22,3 +22,17 @@ jobs:
         ping -c 3 www.baidu.com
         ping -c 3 acorn.cpt.corigine.com
         ping -c 3 apple.cpt.corigine.com
+  
+  running-job:
+    name: running-test
+    needs: my-job
+    runs-on: self-hosted
+    steps:
+    - name: Checkout ci-dev-sdn-private
+      uses: actions/checkout@v2
+      with:
+        repository: Corigine/ci-dev-sdn-private
+        ref: wip-CICD-175-cjw-test
+        path: ci-dev-sdn-private
+        token: ${{secrets.ACCESS_TOKEN}}
+

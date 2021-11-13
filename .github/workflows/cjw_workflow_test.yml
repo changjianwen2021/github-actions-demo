@@ -2,8 +2,8 @@ name: Greeting from CJW
 on: push
 
 jobs:
-  my-job:
-    name: My Job
+  greeting-job:
+    name: Greeting Job
     runs-on: self-hosted
     steps:
     - name: Print a greeting
@@ -25,14 +25,18 @@ jobs:
   
   running-job:
     name: running-test
-    needs: my-job
+    needs: greeting-job
     runs-on: self-hosted
     steps:
-    - name: Checkout ci-dev-sdn-private
-      uses: actions/checkout@v2
-      with:
-        repository: Corigine/ci-dev-sdn-private
-        ref: wip-CICD-175-cjw-test
-        path: ci-dev-sdn-private
-        token: ${{secrets.ACCESS_TOKEN}}
-
+            #- name: Checkout ci-dev-sdn-private
+            #uses: actions/checkout@v2
+            #with:
+            #repository: Corigine/ci-dev-sdn-private
+            #ref: wip-CICD-175-cjw-test
+            #path: ci-dev-sdn-private
+            #token: ${{secrets.ACCESS_TOKEN}}
+    - name: Execute bash test
+      working-directory: /root/regression/ci-dev-sdn-private/tests/
+      shell: bash
+      run: |
+        bash run_tests.sh

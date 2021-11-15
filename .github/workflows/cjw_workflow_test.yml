@@ -29,7 +29,7 @@ jobs:
     runs-on: self-hosted
     steps:
     - name: Clean old artifacts
-      run: sudo git clean -ffdx || sudo rm -rf *
+      run: git clean -ffdx || rm -rf *
 
     - name: Checkout ci-dev-sdn-private
       uses: actions/checkout@v2

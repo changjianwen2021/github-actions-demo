@@ -30,7 +30,8 @@ jobs:
     steps:
     - name: Clean old artifacts
       run: git clean -ffdx || rm -rf *
-
+    
+    #checkout test objects  
     - name: Checkout ci-dev-sdn-private
       uses: actions/checkout@v2
       with:

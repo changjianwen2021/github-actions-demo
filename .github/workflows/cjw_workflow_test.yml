@@ -1,8 +1,7 @@
 name: Greeting from CJW
-on: 
-  #push:
+on:
   schedule:
-    - cron: '23 10 * * *'
+    - cron: '32 10 * * *'
 
 jobs:
   greeting-job:

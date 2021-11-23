@@ -1,9 +1,7 @@
 name: Greeting from CJW
 on:
-  push:
   schedule:
-    #runs on every 20 minutes
-    - cron: '20 * * * *'
+    - cron: '0 * * * *'
 
 jobs:
   greeting-job:

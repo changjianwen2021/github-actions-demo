@@ -1,6 +1,7 @@
 name: Greeting from CJW
 on:
   schedule:
+    #runs on every 20 minutes
     - cron: '20 * * * *'
 
 jobs:

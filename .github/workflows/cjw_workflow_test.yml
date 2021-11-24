@@ -60,11 +60,13 @@ jobs:
         token: ${{secrets.ACCESS_TOKEN}}
 
     - name: Download latest firmware
-      working-directory: ci-libs/ansible/roles/nfp_firmware_install/
+      #working-directory: ci-libs/ansible/roles/nfp_firmware_install/
       shell: bash
       run: |
-        mkdir -p files && cd files
+        #mkdir -p files && cd files
         wget "http://storage-01.zay.corigine.com/cloud/binaries/disa/interim/main/2.14.A/tgz/agilio-flower-app-firmware-AOTC-2.14.A.54-2021.11.22.tar.gz"
+        mkdir -p ci-libs/ansible/roles/nfp_firmware_install/files
+        cp *.tar.gz ci-libs/ansible/roles/nfp_firmware_install/files
 
     #Install firmware, and perform other provisioning task
     - name: Provision DUT
@@ -78,7 +80,7 @@ jobs:
         -e "nfp_fwinst_reload_driver=yes"
         -e "allow_unsupported_platforms=yes"
         -e "github_user=$(whoami)"
-        -e "github_key=${{ secrets.GHUB_TOKEN }}"
+        -e "github_key=${{ secrets.RUNNER_PWD }}"
         --vault-password-file ~/password-file
       env:
         ANSIBLE_FORCE_COLOR: 1

@@ -69,6 +69,7 @@ jobs:
         cp agilio-flower-app-firmware-AOTC-2.14.A.54-2021.11.22.tar.gz ci-libs/ansible/roles/nfp_firmware_install/files/nic-firmware.tar.gz
 
     #Install firmware, and perform other provisioning task
+    #Note: this installer is for corenic, could not be used directly for disa
     - name: Provision DUT
       run: >
         $(which ansible-playbook) ci-libs/ansible/provision_ci_dev_nic.yaml
@@ -85,8 +86,8 @@ jobs:
       env:
         ANSIBLE_FORCE_COLOR: 1
 
-    #- name: Execute bash test
-      #working-directory: ci-dev-sdn-private/tests/
-      #shell: bash
-      #run: |
-        #bash run_tests.sh
+    - name: Execute bash test
+      working-directory: ci-dev-sdn-private/tests/
+      shell: bash
+      run: |
+        bash run_tests.sh

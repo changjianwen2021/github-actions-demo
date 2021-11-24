@@ -50,8 +50,8 @@ jobs:
         ref: nti_with_pycallgraph
         path: nti-private
         token: ${{secrets.ACCESS_TOKEN}}
-	
-	- name: Checkout ci-libs
+
+    - name: Checkout ci-libs
       uses: actions/checkout@v2
       with:
         repository: Corigine/ci-libs

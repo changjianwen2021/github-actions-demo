@@ -65,7 +65,7 @@ jobs:
       run: |
         mkdir -p files && cd files
         wget "http://storage-01.zay.corigine.com/cloud/binaries/disa/interim/main/2.14.A/tgz/agilio-flower-app-firmware-AOTC-2.14.A.54-2021.11.22.tar.gz"
-	
+
     #Install firmware, and perform other provisioning task
     - name: Provision DUT
       run: >
@@ -82,7 +82,7 @@ jobs:
         --vault-password-file ~/password-file
       env:
         ANSIBLE_FORCE_COLOR: 1
-		  
+	
     #- name: Execute bash test
       #working-directory: ci-dev-sdn-private/tests/
       #shell: bash

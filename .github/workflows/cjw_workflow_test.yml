@@ -1,8 +1,8 @@
 name: Greeting from CJW
-on:
+on: 
   push:
   #schedule:
-  #  - cron: '0 0 * * *'
+    #- cron: '17 10 * * *'
 
 jobs:
   greeting-job:
@@ -16,7 +16,6 @@ jobs:
         MIDDLE_NAME: J
         LAST_NAME: W
       run: |
-        date
         echo $MY_VAR $FIRST_NAME $MIDDLE_NAME $LAST_NAME.       
         echo $PATH
         echo `uname -a`
@@ -27,3 +26,65 @@ jobs:
         #ping -c 3 acorn.cpt.corigine.com
         #ping -c 3 apple.cpt.corigine.com
   
+  running-job:
+    name: running-test
+    needs: greeting-job
+    runs-on: self-hosted
+    steps:
+    - name: Clean old artifacts
+      run: git clean -ffdx || rm -rf *
+    
+    #checkout test objects  
+    - name: Checkout ci-dev-sdn-private
+      uses: actions/checkout@v2
+      with:
+        repository: Corigine/ci-dev-sdn-private
+        ref: wip-CICD-175-cjw-test
+        path: ci-dev-sdn-private
+        token: ${{secrets.ACCESS_TOKEN}}
+    
+    - name: Checkout nti-private
+      uses: actions/checkout@v2
+      with:
+        repository: Corigine/nti-private
+        ref: nti_with_pycallgraph
+        path: nti-private
+        token: ${{secrets.ACCESS_TOKEN}}
+	
+	- name: Checkout ci-libs
+      uses: actions/checkout@v2
+      with:
+        repository: Corigine/ci-libs
+		ref: wip-cjw-test
+        path: ci-libs
+        token: ${{secrets.ACCESS_TOKEN}}
+
+    - name: Download latest firmware
+	  working-directory: ci-libs/ansible/roles/nfp_firmware_install/
+	  shell: bash
+	  run: |
+		mkdir -p files && cd files
+	    wget "http://storage-01.zay.corigine.com/cloud/binaries/disa/interim/main/2.14.A/tgz/agilio-flower-app-firmware-AOTC-2.14.A.54-2021.11.22.tar.gz"
+	
+	#Install firmware, and perform other provisioning tasks
+    - name: Provision DUT
+        run: >
+          sudo $(which ansible-playbook) ci-libs/ansible/provision_ci_dev_nic.yaml
+          -i ci-libs/ansible/inventories/ci-resources/hosts.yaml
+          -t firmware_dut
+          -e "target=${HOSTNAME//-/_}"
+          -e "dut_fw_source=file"
+          -e "nfp_fwinst_set_default_firmware=yes"
+          -e "nfp_fwinst_reload_driver=yes"
+          -e "allow_unsupported_platforms=yes"
+          -e "github_user=$(whoami)"
+          -e "github_key=${{ secrets.GHUB_TOKEN }}"
+          --vault-password-file ~/password-file
+        env:
+          ANSIBLE_FORCE_COLOR: 1
+		  
+    #- name: Execute bash test
+      #working-directory: ci-dev-sdn-private/tests/
+      #shell: bash
+      #run: |
+        #bash run_tests.sh

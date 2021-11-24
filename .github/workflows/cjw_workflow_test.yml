@@ -82,7 +82,7 @@ jobs:
         --vault-password-file ~/password-file
       env:
         ANSIBLE_FORCE_COLOR: 1
-	
+
     #- name: Execute bash test
       #working-directory: ci-dev-sdn-private/tests/
       #shell: bash

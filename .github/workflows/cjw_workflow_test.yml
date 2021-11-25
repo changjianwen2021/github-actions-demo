@@ -86,6 +86,7 @@ jobs:
       env:
         ANSIBLE_FORCE_COLOR: 1
 
+    #run test
     - name: Execute bash test
       working-directory: ci-dev-sdn-private/tests/
       shell: bash

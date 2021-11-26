@@ -86,9 +86,11 @@ jobs:
       env:
         ANSIBLE_FORCE_COLOR: 1
 
-    #run test
+    #set env attributes and run test
     - name: Execute bash test
       working-directory: ci-dev-sdn-private/tests/
       shell: bash
       run: |
+        export SDNTEST_DIRNAME='/home/runner/actions-runner/CI/github-actions-demo/github-actions-demo'
+        export SDNTEST_REPO_DIRNAME='/home/runner/actions-runner/CI/github-actions-demo/github-actions-demo/ci-dev-sdn-private'
         bash run_tests.sh

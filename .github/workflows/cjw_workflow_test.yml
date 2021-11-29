@@ -92,6 +92,6 @@ jobs:
       working-directory: ci-dev-sdn-private/tests/
       shell: bash
       run: |
-        export SDNTEST_DIRNAME='/home/runner/actions-runner/CI/github-actions-demo/github-actions-demo'
-        export SDNTEST_REPO_DIRNAME='/home/runner/actions-runner/CI/github-actions-demo/github-actions-demo/ci-dev-sdn-private'
+        #export SDNTEST_DIRNAME='/home/runner/actions-runner/CI/github-actions-demo/github-actions-demo'
+        #export SDNTEST_REPO_DIRNAME='/home/runner/actions-runner/CI/github-actions-demo/github-actions-demo/ci-dev-sdn-private'
         bash run_tests.sh

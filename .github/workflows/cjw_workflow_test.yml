@@ -60,32 +60,32 @@ jobs:
         path: ci-libs
         token: ${{secrets.ACCESS_TOKEN}}
 
-        #- name: Download latest firmware
+    - name: Download latest firmware
       #working-directory: ci-libs/ansible/roles/nfp_firmware_install/
-      #shell: bash
-      #run: |
-        #mkdir -p files && cd files
-        #wget "http://storage-01.zay.corigine.com/cloud/binaries/disa/interim/main/2.14.A/tgz/agilio-flower-app-firmware-AOTC-2.14.A.54-2021.11.22.tar.gz"
-        #mkdir -p ci-libs/ansible/roles/nfp_firmware_install/files
-        #cp agilio-flower-app-firmware-AOTC-2.14.A.54-2021.11.22.tar.gz ci-libs/ansible/roles/nfp_firmware_install/files/nic-firmware.tar.gz
+      shell: bash
+      run: |
+        mkdir -p files && cd files
+        wget "http://storage-01.zay.corigine.com/cloud/binaries/disa/interim/main/2.14.A/tgz/agilio-flower-app-firmware-AOTC-2.14.A.54-2021.11.22.tar.gz"
+        mkdir -p ci-libs/ansible/roles/nfp_firmware_install/files
+        cp agilio-flower-app-firmware-AOTC-2.14.A.54-2021.11.22.tar.gz ci-libs/ansible/roles/nfp_firmware_install/files/nic-firmware.tar.gz
 
     #Install firmware, and perform other provisioning task
     #Note: this installer is for corenic, could not be used directly for disa
-    #- name: Provision DUT
-    #run: >
-    #$(which ansible-playbook) ci-libs/ansible/provision_ci_dev_nic.yaml
-    #-i ci-libs/ansible/inventories/ci-resources/hosts.yaml
-    #-t firmware_dut
-    #-e "target=${HOSTNAME//-/_}"
-    #-e "dut_fw_source=file"
-    #-e "nfp_fwinst_set_default_firmware=yes"
-    #-e "nfp_fwinst_reload_driver=yes"
-    #-e "allow_unsupported_platforms=yes"
-    #-e "github_user=$(whoami)"
-    #-e "github_key=${{ secrets.RUNNER_PWD }}"
-    #--vault-password-file ~/password-file
-    #env:
-    #ANSIBLE_FORCE_COLOR: 1
+    - name: Provision DUT
+      run: >
+        $(which ansible-playbook) ci-libs/ansible/provision_ci_dev_nic.yaml
+        -i ci-libs/ansible/inventories/ci-resources/hosts.yaml
+        -t firmware_dut
+        -e "target=${HOSTNAME//-/_}"
+        -e "dut_fw_source=file"
+        -e "nfp_fwinst_set_default_firmware=yes"
+        -e "nfp_fwinst_reload_driver=yes"
+        -e "allow_unsupported_platforms=yes"
+        -e "github_user=$(whoami)"
+        -e "github_key=${{ secrets.RUNNER_PWD }}"
+        --vault-password-file ~/password-file
+      env:
+        ANSIBLE_FORCE_COLOR: 1
 
     #set env attributes and run test
     #......

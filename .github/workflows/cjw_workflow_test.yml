@@ -30,7 +30,7 @@ jobs:
     name: running-test
     needs: greeting-job
     runs-on: self-hosted
-    timeout-minutes: 600
+    timeout-minutes: 720
     steps:
     - name: Clean old artifacts
       run: git clean -ffdx || rm -rf *

@@ -48,7 +48,8 @@ jobs:
       uses: actions/checkout@v2
       with:
         repository: Corigine/nti-private
-        ref: nti_with_pycallgraph
+        #ref: nti_with_pycallgraph
+        ref: main 
         path: nti-private
         token: ${{secrets.ACCESS_TOKEN}}
 

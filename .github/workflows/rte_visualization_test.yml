@@ -50,14 +50,6 @@ jobs:
       run: git clean -ffdx || rm -rf *
     
     #checkout test objects  
-    - name: Checkout ci-dev-sdn-private
-      uses: actions/checkout@v2
-      with:
-        repository: Corigine/ci-dev-sdn-private
-        ref: wip-OVS-344-rteflow-test
-        path: ci-dev-sdn-private
-        token: ${{secrets.ACCESS_TOKEN}}
-    
     - name: Checkout nti-private
       uses: actions/checkout@v2
       with:
@@ -73,7 +65,15 @@ jobs:
         ref: wip-visualization-test
         path: ci-libs
         token: ${{secrets.ACCESS_TOKEN}}
-
+        
+    - name: Checkout ci-dev-sdn-private
+      uses: actions/checkout@v2
+      with:
+        repository: Corigine/ci-dev-sdn-private
+        ref: wip-OVS-344-rteflow-test
+        path: ci-dev-sdn-private
+        token: ${{secrets.ACCESS_TOKEN}}
+    
     - name: Get test metadata
       id: build
       run: |

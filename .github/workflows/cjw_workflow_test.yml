@@ -1,6 +1,7 @@
 name: Greeting from CJW
 on: 
-  push:
+  workflow_dispatch:
+  #push:
   #schedule:
     #- cron: '17 10 * * *'
 

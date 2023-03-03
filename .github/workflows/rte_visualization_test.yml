@@ -38,7 +38,7 @@ on:
           (overrides basic test/s)
         type: string
         required: false
-        default: ''
+        default: 'nfpflownic.unit_no_fw_ld.ping_1_fromA'
       
 jobs:
   running-job:
@@ -69,9 +69,9 @@ jobs:
     - name: Checkout ci-dev-sdn-private
       uses: actions/checkout@v2
       with:
-        repository: Corigine/ci-dev-sdn-private
-        ref: wip-OVS-344-rteflow-test
-        path: ci-dev-sdn-private
+        repository: Corigine/ci-dev-nic-private
+        ref: main
+        path: ci-dev-nic-private
         token: ${{secrets.ACCESS_TOKEN}}
     
     - name: Get test metadata
@@ -80,7 +80,7 @@ jobs:
         echo "::set-output name=sha::${GITHUB_SHA:0:7}"
         LOGFILE="$(date -u +%Y.%m.%d-%H.%M)_${{matrix.test}}.${GITHUB_SHA:0:7}"
         echo "::set-output name=logfile::${LOGFILE}"
-        echo "::set-output name=log::${HOME}/logs/ci-dev-sdn/${LOGFILE}"
+        echo "::set-output name=log::${HOME}/logs/ci-dev-nic/${LOGFILE}"
         case "$GITHUB_REF" in
           "refs/heads/release-"*)
             echo "::set-output name=path::binaries/disa/releases"
@@ -100,9 +100,9 @@ jobs:
         if [[ ! -z "${{github.event.inputs.test_case }}" ]]; then
               echo "::set-output name=test::${{ github.event.inputs.test_case }}"
         elif [[ "${{github.event.inputs.test_level}}" == "basic" ]]; then
-              echo "::set-output name=test::match_action_field.action-htoh-other-1n.mirror_dst_vlan_ipv4_tcp match_action_field.match-htoh-vlan-1n.vlan_id_vlan_ipv4_udp"
+              echo "::set-output name=test::nfpflownic.unit_no_fw_ld"
         elif [[ "${{github.event.inputs.test_level}}" == "normal" ]]; then
-              echo "::set-output name=test::match_action_field.action-htoh-drop-1n"
+              echo "::set-output name=test::nfpflownic.unit_no_fw_ld"
         fi
     
     #- name: Prepare firmware folder
@@ -119,15 +119,15 @@ jobs:
     #    mkdir -p ci-libs/ansible/roles/nfp_firmware_install/files
 
     - name: Run DEV regressions
-      working-directory: ci-dev-sdn-private/rte-flow/
+      working-directory: ci-dev-nic-private/test/
       shell: bash
       run: |
-        export SDNTEST_DIRNAME=$(dirname $(dirname "$PWD"))
-        export SDNTEST_REPO_DIRNAME=$SDNTEST_DIRNAME/ci-dev-sdn-private
-        export PATH=$PATH:$SDNTEST_DIRNAME/nti-private/nti/ti
+        #export SDNTEST_DIRNAME=$(dirname $(dirname "$PWD"))
+        #export SDNTEST_REPO_DIRNAME=$SDNTEST_DIRNAME/ci-dev-sdn-private
+        #export PATH=$PATH:$SDNTEST_DIRNAME/nti-private/nti/ti
         set -o pipefail
         ../../nti-private/ti/ticmd \
-        -c ../../ci-libs/ci-config/${HOSTNAME}/ci-dev-sdn/sa_dut60_59.cfg \
+        -c ../../ci-libs/ci-config/${HOSTNAME}/ci-dev-nic/nj_161_162.cfg \
         -l ${{steps.build.outputs.log}} \
         run ${{steps.build.outputs.test}} | \
         sed --unbuffered 's/.*FAILED/\0\n::error::\0/'

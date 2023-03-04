@@ -1,4 +1,4 @@
-name: rte test for visualization
+name: ci-dev test for visualization
 on:
   workflow_dispatch:  # Manual trigger
     inputs:
@@ -100,9 +100,9 @@ jobs:
         if [[ ! -z "${{github.event.inputs.test_case }}" ]]; then
               echo "::set-output name=test::${{ github.event.inputs.test_case }}"
         elif [[ "${{github.event.inputs.test_level}}" == "basic" ]]; then
-              echo "::set-output name=test::nfpflownic.unit_no_fw_ld"
+              echo "::set-output name=test::nfpflownic.unit_no_fw_ld.ping_1_fromA"
         elif [[ "${{github.event.inputs.test_level}}" == "normal" ]]; then
-              echo "::set-output name=test::nfpflownic.unit_no_fw_ld"
+              echo "::set-output name=test::nfpflownic.unit_no_fw_ld.ping_1_fromA"
         fi
     
     #- name: Prepare firmware folder
@@ -122,9 +122,9 @@ jobs:
       working-directory: ci-dev-nic-private/test/
       shell: bash
       run: |
-        #export SDNTEST_DIRNAME=$(dirname $(dirname "$PWD"))
+        export SDNTEST_DIRNAME=$(dirname $(dirname "$PWD"))
         #export SDNTEST_REPO_DIRNAME=$SDNTEST_DIRNAME/ci-dev-sdn-private
-        #export PATH=$PATH:$SDNTEST_DIRNAME/nti-private/nti/ti
+        export PATH=$PATH:$SDNTEST_DIRNAME/nti-private/nti/ti
         set -o pipefail
         ../../nti-private/ti/ticmd \
         -c ../../ci-libs/ci-config/${HOSTNAME}/ci-dev-nic/nj_161_162.cfg \

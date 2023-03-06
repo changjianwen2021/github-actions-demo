@@ -42,7 +42,7 @@ on:
       
 jobs:
   running-job:
-    name: download test repo
+    name: running concrete test
     runs-on: rte-runner
     timeout-minutes: 2000
     steps:

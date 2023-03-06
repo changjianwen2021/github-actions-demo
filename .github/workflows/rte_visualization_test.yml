@@ -50,14 +50,6 @@ jobs:
       run: git clean -ffdx || rm -rf *
     
     #checkout test objects  
-    - name: Checkout nti-private
-      uses: actions/checkout@v2
-      with:
-        repository: Corigine/nti-private
-        ref: main
-        path: nti-private
-        token: ${{secrets.ACCESS_TOKEN}}
-
     - name: Checkout ci-libs
       uses: actions/checkout@v2
       with:
@@ -66,7 +58,15 @@ jobs:
         path: ci-libs
         token: ${{secrets.ACCESS_TOKEN}}
         
-    - name: Checkout ci-dev-sdn-private
+    - name: Checkout nti-private
+      uses: actions/checkout@v2
+      with:
+        repository: Corigine/nti-private
+        ref: main
+        path: nti-private
+        token: ${{secrets.ACCESS_TOKEN}}
+        
+    - name: Checkout ci-dev-nic-private
       uses: actions/checkout@v2
       with:
         repository: Corigine/ci-dev-nic-private

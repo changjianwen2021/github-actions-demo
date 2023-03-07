@@ -46,33 +46,33 @@ jobs:
     runs-on: rte-runner
     timeout-minutes: 2000
     steps:
-    - name: Clean old artifacts
-      run: git clean -ffdx || rm -rf *
+    #- name: Clean old artifacts
+    #  run: git clean -ffdx || rm -rf *
     
     #checkout test objects  
-    - name: Checkout ci-libs
-      uses: actions/checkout@v2
-      with:
-        repository: Corigine/ci-libs
-        ref: wip-visualization-test
-        path: ci-libs
-        token: ${{secrets.ACCESS_TOKEN}}
+    #3- name: Checkout ci-libs
+    #  uses: actions/checkout@v2
+    #  with:
+    #    repository: Corigine/ci-libs
+    #    ref: wip-visualization-test
+    #    path: ci-libs
+    #    token: ${{secrets.ACCESS_TOKEN}}
         
-    - name: Checkout nti-private
-      uses: actions/checkout@v2
-      with:
-        repository: Corigine/nti-private
-        ref: main
-        path: nti-private
-        token: ${{secrets.ACCESS_TOKEN}}
+    #- name: Checkout nti-private
+    #  uses: actions/checkout@v2
+    #  with:
+    #    repository: Corigine/nti-private
+    #    ref: main
+    #    path: nti-private
+    #    token: ${{secrets.ACCESS_TOKEN}}
         
-    - name: Checkout ci-dev-nic-private
-      uses: actions/checkout@v2
-      with:
-        repository: Corigine/ci-dev-nic-private
-        ref: main
-        path: ci-dev-nic-private
-        token: ${{secrets.ACCESS_TOKEN}}
+    #- name: Checkout ci-dev-nic-private
+    #  uses: actions/checkout@v2
+    #  with:
+    #    repository: Corigine/ci-dev-nic-private
+    #    ref: main
+    #    path: ci-dev-nic-private
+    #    token: ${{secrets.ACCESS_TOKEN}}
     
     - name: Get test metadata
       id: build
